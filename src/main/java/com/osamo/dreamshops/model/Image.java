@@ -3,9 +3,12 @@ package com.osamo.dreamshops.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Blob;
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @Entity
 
@@ -24,4 +27,7 @@ public class Image {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    public Image() {
+
+    }
 }
