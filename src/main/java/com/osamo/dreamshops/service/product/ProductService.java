@@ -1,6 +1,7 @@
 package com.osamo.dreamshops.service.product;
 
 import com.osamo.dreamshops.exceptions.ProductNotFoundException;
+import com.osamo.dreamshops.exceptions.ResourceNotFoundException;
 import com.osamo.dreamshops.model.Category;
 import com.osamo.dreamshops.model.Product;
 import com.osamo.dreamshops.repository.CategoryRepository;
@@ -9,6 +10,7 @@ import com.osamo.dreamshops.request.AddProductRequest;
 import com.osamo.dreamshops.request.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,21 +48,18 @@ public class ProductService implements IProductService{
                 request.getInventory(),
                 request.getDescription(),
                 category
-
         );
-
     }
-
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
     }
 
     @Override
     public void deleteProductById(Long id) {
        productRepository.findById(id).ifPresentOrElse(productRepository::delete,
-               () -> { throw new ProductNotFoundException("Product not found!");
+               () -> { throw new ResourceNotFoundException("Product not found!");
        });
     }
 
@@ -69,7 +68,7 @@ public class ProductService implements IProductService{
         return productRepository.findById(productId)
                 .map(existingProduct -> updateExistingProduct(existingProduct, request))
                 .map(productRepository::save)
-                .orElseThrow(()-> new ProductNotFoundException("Product not found!"));
+                .orElseThrow(()-> new ResourceNotFoundException("Product not found!"));
 
     }
 
@@ -84,11 +83,11 @@ public class ProductService implements IProductService{
               existingProduct.setCategory(category);
 
               return existingProduct;
-
     }
 
     @Override
     public List<Product> getAllProducts() {
+
         return productRepository.findAll();
     }
 
@@ -99,6 +98,7 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> getProductsByBrand(String brand) {
+
         return productRepository.findByBrand(brand);
     }
 
@@ -109,6 +109,7 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> getProductsByName(String name) {
+
         return productRepository.findByName(name);
     }
 
@@ -120,5 +121,6 @@ public class ProductService implements IProductService{
     @Override
     public Long countProductsByBrandAndName(String brand, String name) {
         return productRepository.countByBrandAndName(brand, name);
+
     }
 }
