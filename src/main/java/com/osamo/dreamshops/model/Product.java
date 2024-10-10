@@ -1,5 +1,6 @@
 package com.osamo.dreamshops.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 

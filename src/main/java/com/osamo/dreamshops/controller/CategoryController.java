@@ -51,7 +51,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("category/{id}/category")
+    @GetMapping("category/{name}/category")
     public ResponseEntity<ApiResponse> getCategoryByName(@PathVariable String name){
         try {
             Category theCategory = categoryService.getCategoryByName(name);

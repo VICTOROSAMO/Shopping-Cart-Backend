@@ -1,5 +1,6 @@
 package com.osamo.dreamshops.service.product;
 
+import com.osamo.dreamshops.dto.ProductDto;
 import com.osamo.dreamshops.model.Product;
 import com.osamo.dreamshops.request.AddProductRequest;
 import com.osamo.dreamshops.request.ProductUpdateRequest;
@@ -7,7 +8,7 @@ import com.osamo.dreamshops.request.ProductUpdateRequest;
 import java.util.List;
 
 public interface IProductService {
-    Product addProduct(AddProductRequest request);
+    Product addProduct(AddProductRequest product);
     Product getProductById(Long id);
     void deleteProductById(Long id);
     Product updateProduct(ProductUpdateRequest request, Long productId);
@@ -19,6 +20,7 @@ public interface IProductService {
     List<Product> getProductsByBrandAndName(String brand, String name);
     Long countProductsByBrandAndName(String brand, String name);
 
+    List<ProductDto> getConvertedProducts(List<Product> products);
 
-
+    ProductDto convertToDto(Product product);
 }
